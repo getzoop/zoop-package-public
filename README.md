@@ -2,7 +2,7 @@
 Repositório publico Zoop para clientes terem acesso a produtos com facilidade
 
 ## Gradle
-Afim de ter acesso ao repositório maven da Zoop, use as seguintes credenciais:
+A fim de ter acesso ao repositório maven da Zoop, use as seguintes credenciais:
 <br />
 *_zoop_username_*
 <br />
