@@ -10,7 +10,7 @@ A fim de ter acesso ao repositório maven da Zoop, use as seguintes credenciais:
 <br />
 *_zoop_pat_*
 <br />
-`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`
+`zoop_pat_11A7XBF4Q0MueOutHW9G1O_ppW01WTd6xu7SIYEX2Z2TdVz77xD2y22Q0tqxQV5BhXQD6KUPMExoXg1jK4`
 <br />
 Este PAT tem validade de um ano (Jun-2024) e será atualizado no mês de expiração.
 
