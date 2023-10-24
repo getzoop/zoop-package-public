@@ -10,7 +10,7 @@ A fim de ter acesso ao repositório maven da Zoop, use as seguintes credenciais:
 <br />
 *_zoop_pat_*
 <br />
-`zoop_pat_11A7XBF4Q0MueOutHW9G1O_ppW01WTd6xu7SIYEX2Z2TdVz77xD2y22Q0tqxQV5BhXQD6KUPMExoXg1jK4`
+`zoop_pat_11A7XBF4Q0w9o1d97yVieF_JNsL7SBSm5rBEwJ6NN2yx9w5gzyauke7husBJstoKfP6XB35BEE4gGzGuxo`
 <br />
 
 Por motivos de segurança, o token não pode ficar totalmente exposto. 
