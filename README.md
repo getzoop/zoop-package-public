@@ -1,9 +1,6 @@
 # zoop-package-public
 Repositório publico Zoop para clientes terem acesso a produtos com facilidade
 
-##TESTE
-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
-
 ## Gradle
 A fim de ter acesso ao repositório maven da Zoop, use as seguintes credenciais:
 <br />
