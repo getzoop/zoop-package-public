@@ -2,6 +2,31 @@
 
 Repositório publico Zoop para clientes terem acesso a produtos com facilidade
 
+
+<table border="1px">
+  <tr>
+    <td>
+        <h4>Índice</h4>
+        <ol type="1">
+            <li>
+                <a href="#gradle">Gradle</a>
+                <ol type="i">
+                    <li><a href="#adicionando-o-repositório-maven">Adicionando o repositório maven</a></li>
+                </ol>
+            </li>
+            <li>
+                <a href="#gerando-uma-github-pat">Gerando uma GitHub PAT</a>
+                <ol type="i">
+                    <li><a href="#gerando-uma-pat-fined-grained">Gerando uma PAT <i>fined-grained</i></a></li>
+                    <li><a href="#gerando-uma-pat-classic">Gerando uma PAT <i>classic</i></a></li>
+                    <li><a href="#cuidados-sobre-a-exposição-da-pat">Cuidados sobre a exposição da PAT</a></li>
+                </ol>
+            </li>
+        </ol>
+    </td>
+  </tr>
+</table>
+
 ## Gradle
 
 O acesso ao repositório _maven_ da Zoop requer autenticação, como todo repositório _maven_ do GitHub. Por isso, é necessário usar suas credenciais do GitHub no projeto para obter quaisquer pacotes. Especificamente, você precisa de seu **usuário** e de uma **_personal access token_ (PAT)** que possua permissão para ler e obter pacotes/artefatos de repositórios públicos.
