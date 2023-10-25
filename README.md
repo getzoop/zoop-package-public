@@ -68,7 +68,7 @@ repositories {
 
         credentials {
             username = "MyCompanyGH"
-            password = "ghp_..."
+            password = "github_pat_..."
         }
     }
 }
@@ -84,17 +84,32 @@ Recomendamos que uma PAT do modelo **_fine-grained_** seja usada para o propósi
 
 Acesse as [configurações](https://github.com/settings) de sua conta no GitHub e clique em _Developer settings_.
 
+![Selecione a opção _Settings_](doc/img/fg-pat_01_settings.png)
+![Selecione a opção _Developer settings_](doc/img/fg-pat_02_developer-settings.png)
+
 Em seguida, clique em [_Personal access tokens > Fine-grained tokens_](https://github.com/settings/tokens?type=beta).
+
+![Selecione _Personal access tokens > Fine-grained tokens_](doc/img/fg-pat_03_fined-grained-token.png)
 
 Clique no botão <kbd>[Generate new token](https://github.com/settings/personal-access-tokens/new)</kbd>.
 
+![Clique em _Generate new token_](doc/img/fg-pat_04_start-new-token.png)
+
 Preencha o campo _Token name_ com um nome e o campo _Description_ com uma descrição que ajudem você a identificar o propósito desta nova PAT mais tarde. Determine o período de expiração da nova PAT em _Expiration_. Embora seja tentador a configurar para que não expire, recomendamos não fazê-lo. Se a PAT vier a tornar-se obsoleta e esquecida, por qualquer motivo, pelo menos ela será revogada automaticamente, mitigando transtornos.
+
+![Preencha as configurações da PAT](doc/img/fg-pat_05_input-info.png)
 
 Em _Repository access_, marque a opção _Public Repositories (read-only)_.
 
+![Marque a opção _Public Repositories (read-only)_](doc/img/fg-pat_06_repo-permission-public-only.png)
+
 Você também pode marcar _All repositories_, ao invés disso. Porém, será necessário conceder permissões adicionais. Nesse caso, em _Permissions > Repository permissions > Actions_, selecione a opção _Read-only_.
 
+![Selecione _Read-only_ em _Permissions > Repository permissions > Actions_](doc/img/fg-pat_07_additional-permissions.png)
+
 Clique no botão <kbd>Generate token</kbd> para finalizar o processo. Copie agora a chave apresentada e armazene-a. É essa a chave que será usada nas credenciais de acesso ao repositório _maven_ da Zoop.
+
+![Copie a chave da nova PAT](doc/img/fg-pat_08_copy-new-token.png)
 
 ### Gerando uma PAT _classic_
 
