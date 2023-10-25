@@ -115,15 +115,28 @@ Clique no botão <kbd>Generate token</kbd> para finalizar o processo. Copie agor
 
 Acesse as [configurações](https://github.com/settings) de sua conta no GitHub e clique em _Developer settings_.
 
+![Selecione a opção _Settings_](doc/img/fg-pat_01_settings.png)
+![Selecione a opção _Developer settings_](doc/img/fg-pat_02_developer-settings.png)
+
 Em seguida, clique em [_Personal access tokens > Tokens (classic)_](https://github.com/settings/tokens).
+
+![Selecione _Personal access tokens > Tokens (classic)_](doc/img/cl-pat_03_classic-token.png)
 
 Clique no botão <kbd>Generate new token</kbd> e selecione a opção [_Generate new token (classic)_](https://github.com/settings/tokens/new).
 
+![Clique em _Generate new token (classic)_](doc/img/cl-pat_04_start-new-classic-token.png)
+
 Preencha o campo _Note_ com um nome ou descrição que ajude você a identificar o propósito desta nova PAT mais tarde. Determine o período de expiração da nova PAT em _Expiration_. Embora seja tentador a configurar para que não expire, recomendamos não fazê-lo. Se a PAT vier a tornar-se obsoleta e esquecida, por qualquer motivo, pelo menos ela será revogada automaticamente, mitigando transtornos.
+
+![Preencha as configurações da PAT](doc/img/cl-pat_05_input-info.png)
 
 Dentre os escopos (_Select scopes_) oferecidos, marque no mínimo `read:packages`. Lembre-se de que você pode editar os escopos concedidos a uma PAT _classic_ mais tarde.
 
+![Marque `read:packages`](doc/img/cl-pat_06_select-scope.png)
+
 Clique no botão <kbd>Generate token</kbd> para finalizar o processo. Copie agora a chave apresentada e armazene-a. É essa a chave que será usada nas credenciais de acesso ao repositório _maven_ da Zoop.
+
+![Copie a chave da nova PAT](doc/img/cl-pat_07_copy-new-token.png)
 
 ### Cuidados sobre a exposição da PAT
 
