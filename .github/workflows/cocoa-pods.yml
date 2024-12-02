@@ -1,0 +1,106 @@
+name: Update Podspec on Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  generate_podspec:
+    runs-on: ubuntu-latest
+    env:
+      SDK_NAME: TapOnPhone-iOS
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby for Podspec generation
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+
+      - name: Get release version and name
+        id: get_release_info
+        run: |
+          RELEASE_NAME="${{ github.event.release.name }}"
+          RELEASE_VERSION="${{ github.event.release.tag_name }}"
+          echo "Release Name: $RELEASE_NAME"
+          echo "Release Version: $RELEASE_VERSION"
+
+          if [[ "$RELEASE_NAME" =~ TapOnPhoneSDK-iOS.zip ]]; then
+            echo "Release matches the pattern."
+            echo "MATCHED=true" >> $GITHUB_ENV
+          else
+            echo "Release does not match the pattern."
+            echo "MATCHED=false" >> $GITHUB_ENV
+          fi
+
+      - name: Exit if release name doesn't match the pattern
+        if: env.MATCHED != 'true'
+        run: |
+          echo "Release name does not match the expected pattern. Exiting."
+          exit 0
+
+      - name: Download the .zip file from the public release
+        run: |
+          RELEASE_URL="${{ github.event.release.assets[0].browser_download_url }}"
+          echo "Downloading .zip from: $RELEASE_URL"
+          
+          curl -L -o sdk-release.zip $RELEASE_URL
+          
+          if [[ ! -f sdk-release.zip ]]; then
+            echo "Error: .zip file not downloaded successfully."
+            exit 1
+          fi
+
+      - name: Unzip the .zip file
+        run: |
+          unzip sdk-release.zip -d sdk-release/
+          
+          if [[ ! -d sdk-release/TapOnPhoneSDK-iOS ]]; then
+            echo "Error: Expected xcframework files not found in the extracted folder."
+            exit 1
+          fi
+
+      - name: Create Podspec file
+        run: |
+          XCFRAMEWORK_ROOT="./sdk-release"
+          SDK_VERSION=$RELEASE_VERSION
+          
+          PODSPEC_CONTENT="
+          Pod::Spec.new do |s|
+            s.name             = '${SDK_NAME}'
+            s.version          = '${SDK_VERSION}'
+            s.summary          = 'Tap on phone SDK for iOS'
+            s.description      = 'Receive payments with iPhone using NFC'
+            s.homepage         = 'https://github.com/getzoop/zoop-package-public'
+            s.license          = { :type => 'MIT', :file => 'LICENSE' }
+            s.author           = { 'Talisson Bento' => 'talisson.bento@ifood.com.br' }
+            s.source           = { :git => 'https://github.com/myorg/my-repository.git', :tag => '${SDK_VERSION}' }
+            s.source_files     = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK/**/*.h'
+            s.public_header_files = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK/**/*.h'
+            s.vendored_frameworks = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK.xcframework'
+            s.vendored_frameworks = '${XCFRAMEWORK_ROOT}/VisaSensoryBranding.xcframework'
+            s.requires_arc     = true
+            s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
+            s.frameworks        = 'UIKit'
+          end
+          "
+          echo "$PODSPEC_CONTENT" > "${SDK_NAME}.podspec"
+          echo "Podspec file created: ${SDK_NAME}.podspec"
+
+      - name: Commit and push Podspec file to specific branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          
+          BRANCH_NAME="${SDK_NAME}/${RELEASE_VERSION}"
+          
+          git checkout -b "$BRANCH_NAME" || git checkout "$BRANCH_NAME"
+          
+          git add "${SDK_NAME}.podspec"
+          git commit -m "Update Podspec for release ${SDK_VERSION}"
+          
+          git push origin "$BRANCH_NAME"
