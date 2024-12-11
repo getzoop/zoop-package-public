@@ -27,7 +27,7 @@ jobs:
           echo "Release Name: $RELEASE_NAME"
           echo "Release Version: $RELEASE_VERSION"
 
-          if [[ "$RELEASE_NAME" =~ TapOnPhoneSDK-iOS.zip ]]; then
+          if [[ "$RELEASE_NAME" =~ TapOnPhoneSDK-iOS ]]; then
             echo "Release matches the pattern."
             echo "MATCHED=true" >> $GITHUB_ENV
           else
