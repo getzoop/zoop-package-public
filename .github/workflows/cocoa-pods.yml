@@ -43,7 +43,7 @@ jobs:
 
       - name: Download the .zip file from the public release
         run: |
-          RELEASE_URL="https://github.com/getzoop/zoop-package-public/releases/download/$RELEASE_VERSION/TapOnPhoneSDK-iOS.zip"
+          RELEASE_URL="https://github.com/getzoop/zoop-package-public/releases/download/${{ github.event.release.tag_name }}/TapOnPhoneSDK-iOS.zip"
           echo "Downloading .zip from: $RELEASE_URL"
           
           curl -L -o sdk-release.zip $RELEASE_URL
@@ -70,13 +70,13 @@ jobs:
           PODSPEC_CONTENT="
           Pod::Spec.new do |s|
             s.name             = '${SDK_NAME}'
-            s.version          = '${SDK_VERSION}'
+            s.version          = '${{ github.event.release.tag_name }}'
             s.summary          = 'Tap on phone SDK for iOS'
             s.description      = 'Receive payments with iPhone using NFC'
             s.homepage         = 'https://github.com/getzoop/zoop-package-public'
             s.license          = { :type => 'MIT', :file => 'LICENSE' }
             s.author           = { 'Talisson Bento' => 'talisson.bento@ifood.com.br' }
-            s.source           = { :git => 'https://github.com/myorg/my-repository.git', :tag => '${SDK_VERSION}' }
+            s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => '${SDK_VERSION}' }
             s.source_files     = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK/**/*.h'
             s.public_header_files = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK/**/*.h'
             s.vendored_frameworks = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK.xcframework'
@@ -96,7 +96,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           
-          BRANCH_NAME="${SDK_NAME}/${RELEASE_VERSION}"
+          BRANCH_NAME="${{ github.event.release.name }}/${{ github.event.release.tag_name }}"
           
           git checkout -b "$BRANCH_NAME" || git checkout "$BRANCH_NAME"
           
