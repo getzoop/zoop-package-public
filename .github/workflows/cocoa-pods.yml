@@ -43,7 +43,7 @@ jobs:
 
       - name: Download the .zip file from the public release
         run: |
-          RELEASE_URL="${{ github.event.release.assets[0].browser_download_url }}"
+          RELEASE_URL="https://github.com/getzoop/zoop-package-public/releases/download/$RELEASE_VERSION/TapOnPhoneSDK-iOS.zip"
           echo "Downloading .zip from: $RELEASE_URL"
           
           curl -L -o sdk-release.zip $RELEASE_URL
