@@ -76,7 +76,7 @@ jobs:
             s.homepage         = 'https://github.com/getzoop/zoop-package-public'
             s.license          = { :type => 'MIT', :file => 'LICENSE' }
             s.author           = { 'Talisson Bento' => 'talisson.bento@ifood.com.br' }
-            s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => '${SDK_VERSION}' }
+            s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => '${{ github.event.release.tag_name }}' }
             s.source_files     = '${XCFRAMEWORK_ROOT}/**/*.h'
             s.public_header_files = '${XCFRAMEWORK_ROOT}/**/*.h'
             s.vendored_frameworks = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK.xcframework'
