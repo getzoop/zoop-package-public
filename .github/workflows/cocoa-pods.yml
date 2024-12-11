@@ -36,7 +36,7 @@ jobs:
           fi
 
       - name: Exit if release name doesn't match the pattern
-        if: env.MATCHED != 'true'
+        if: env.MATCHED == 'false'
         run: |
           echo "Release name does not match the expected pattern. Exiting."
           exit 0
