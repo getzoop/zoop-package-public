@@ -97,6 +97,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           
           BRANCH_NAME="${{ github.event.release.name }}/${{ github.event.release.tag_name }}"
+          echo "Branch: $BRANCH_NAME"
           
           git checkout -b "$BRANCH_NAME" || git checkout "$BRANCH_NAME"
           
