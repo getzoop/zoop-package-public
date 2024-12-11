@@ -89,6 +89,42 @@ jobs:
           echo "$PODSPEC_CONTENT" > "${SDK_NAME}.podspec"
           echo "Podspec file created: ${SDK_NAME}.podspec"
 
+      - name: Create Swift Package file
+        run: |
+          ROOT="./sdk-release/TapOnPhoneSDK-iOS"
+          PACKAGE_NAME="${{ github.event.release.name }}"
+          PACKAGE_VERSION="${{ github.event.release.tag_name }}"
+      
+          PACKAGE_CONTENT="
+          // swift-tools-version: 5.6
+          import PackageDescription
+      
+          let package = Package(
+              name: \"${PACKAGE_NAME}\",
+              platforms: [
+                  .iOS(.v11),
+                  .macOS(.v10_15)
+              ],
+              products: [
+                  .library(
+                      name: \"${PACKAGE_NAME}\",
+                      targets: [\"TapOnPhoneSDK\", \"VisaSensoryBranding\"])
+              ],
+              targets: [
+                  .binaryTarget(
+                      name: \"TapOnPhoneSDK\",
+                      path: \"${ROOT}/TapOnPhoneSDK.xcframework\"
+                  ),
+                  .binaryTarget(
+                      name: \"VisaSensoryBranding\",
+                      path: \"${ROOT}/VisaSensoryBranding.xcframework\"
+                  )
+              ]
+          )
+          "      
+          echo "$PACKAGE_CONTENT" > Package.swift
+          echo "Package.swift criado com sucesso:"
+
       - name: Commit and push Podspec file to specific branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
