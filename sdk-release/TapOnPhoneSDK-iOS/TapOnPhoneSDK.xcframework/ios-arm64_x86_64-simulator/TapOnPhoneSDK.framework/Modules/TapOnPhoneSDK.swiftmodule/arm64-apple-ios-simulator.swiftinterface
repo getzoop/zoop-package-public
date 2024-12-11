@@ -1,0 +1,505 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name TapOnPhoneSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import AVKit
+import CoreHaptics
+import CryptoKit
+import Foundation
+import ProximityReader
+import Swift
+@_exported import TapOnPhoneSDK
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum TapOnPhoneVisaAnimationLangCode {
+  case pt
+  case es
+  case en
+  public func asString() -> Swift.String
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneVisaAnimationLangCode, b: TapOnPhoneSDK.TapOnPhoneVisaAnimationLangCode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TapOnPhonePaymentNetwork : Swift.String {
+  case mastercard
+  case maestro
+  case visa
+  case electron
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension UIKit.UIColor {
+  public static let visaBlue: UIKit.UIColor
+  public static let visaGray: UIKit.UIColor
+  convenience public init(hexString: Swift.String, alpha: CoreFoundation.CGFloat = 1.0)
+}
+public struct TapOnPhoneVisaBranding : Swift.Equatable {
+  public let langCode: TapOnPhoneSDK.TapOnPhoneVisaAnimationLangCode
+  public let backgroundColor: UIKit.UIColor
+  public let enableAudio: Swift.Bool
+  public let enableHaptics: Swift.Bool
+  public let enableCheckmark: Swift.Bool
+  public let checkmarkText: TapOnPhoneSDK.TapOnPhoneVisaCheckmarkText
+  public init(langCode: TapOnPhoneSDK.TapOnPhoneVisaAnimationLangCode = .pt, backgroundColor: UIKit.UIColor = .visaBlue, enableAudio: Swift.Bool = true, enableHaptics: Swift.Bool = true, enableCheckmark: Swift.Bool = true, checkmarkText: TapOnPhoneSDK.TapOnPhoneVisaCheckmarkText = .none)
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneVisaBranding, b: TapOnPhoneSDK.TapOnPhoneVisaBranding) -> Swift.Bool
+}
+public struct TapOnPhoneLogMessage : Swift.Equatable {
+  public let category: TapOnPhoneSDK.TapOnPhoneLogCategory
+  public let level: TapOnPhoneSDK.TapOnPhoneLogLevel
+  public let message: Swift.String
+  public let timestamp: Swift.Double
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneLogMessage, b: TapOnPhoneSDK.TapOnPhoneLogMessage) -> Swift.Bool
+}
+public enum TapOnPhoneSimulatedCancelReadError : Swift.Equatable {
+  case deviceNotReadyError
+  case unsupportedDeviceError
+  case readerReadCancelled
+  case readerNotReady
+  case operationTimedOut
+  case readerError(_: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError)
+  public func asEvent() -> TapOnPhoneSDK.TapOnPhoneEvent
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneSimulatedCancelReadError, b: TapOnPhoneSDK.TapOnPhoneSimulatedCancelReadError) -> Swift.Bool
+}
+public enum TapOnPhoneSimulatedLinkAccountError : Swift.Equatable {
+  case unsupportedDeviceError
+  case readerError(_: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError)
+  public func asEvent() -> TapOnPhoneSDK.TapOnPhoneEvent
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneSimulatedLinkAccountError, b: TapOnPhoneSDK.TapOnPhoneSimulatedLinkAccountError) -> Swift.Bool
+}
+public enum TapOnPhoneEnvironment : Swift.String {
+  case staging
+  case production
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TapOnPhoneCurrencyCode : Swift.String {
+  case BRL
+  case USD
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct TapOnPhoneTransactionSuccess : Swift.Equatable {
+  public let referenceId: Swift.String?
+  public let transactionId: Swift.String
+  public let statusCode: Swift.String
+  public let message: Swift.String
+  public let salesReceipt: Swift.String
+  public let cardBrand: Swift.String
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneTransactionSuccess, b: TapOnPhoneSDK.TapOnPhoneTransactionSuccess) -> Swift.Bool
+}
+public enum TapOnPhoneSimulatedReadCardError : Swift.Equatable {
+  case deviceNotReadyError
+  case unsupportedDeviceError
+  case invalidAmountOrInstallments
+  case readNotCompletedOrSessionEnded
+  case readerReadCancelled
+  case sessionEnded
+  case transactionError
+  case readNotAllowed
+  case readFromBackgroundError
+  case readerServiceError
+  case noReaderSession
+  case readerSessionExpired
+  case readerSessionNetworkError
+  case readerSessionAuthenticationError
+  case readerSessionBusy
+  case readCancelled
+  case invalidAmount
+  case invalidCurrencyCode
+  case invalidPreferredAID
+  case nfcDisabled
+  case readNotAllowedDuringCall
+  case passcodeDisabled
+  case cardReadFailed
+  case paymentReadFailed
+  case paymentCardDeclined
+  case pinEntryFailed
+  case pinTokenInvalid
+  case pinEntryTimeout
+  case pinCancelled
+  case pinNotAllowed
+  case readerError(_: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError)
+  public func asEvent() -> TapOnPhoneSDK.TapOnPhoneEvent
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneSimulatedReadCardError, b: TapOnPhoneSDK.TapOnPhoneSimulatedReadCardError) -> Swift.Bool
+}
+public struct TapOnPhoneTransactionError : Swift.Equatable {
+  public var referenceId: Swift.String?
+  public let statusCode: Swift.String
+  public let message: Swift.String
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneTransactionError, b: TapOnPhoneSDK.TapOnPhoneTransactionError) -> Swift.Bool
+}
+public enum TapOnPhoneEventCode : Swift.Int {
+  case apiAuthenticationSuccess
+  case appleAccountLinkSuccess
+  case deinitSuccess
+  case deviceReadySuccess
+  case paymentTypeChangeSuccess
+  case sessionPrepareSuccess
+  case transactionSuccess
+  case accountDeactivated
+  case apiAuthenticationError
+  case apiNetworkError
+  case appleAccountAlreadyLinked
+  case appleAccountLinkError
+  case appleAccountLinkingCancelled
+  case appleAccountLinkingCheckFailed
+  case appleAccountLinkingFailed
+  case appleAccountLinkRequiresiCloudSignIn
+  case appleAccountNotLinked
+  case cardReadFailed
+  case deviceBanned
+  case deviceNotReadyError
+  case emptyReaderToken
+  case invalidAmount
+  case invalidAmountOrInstallments
+  case invalidCurrencyCode
+  case invalidMerchant
+  case invalidPaymentType
+  case invalidPreferredAID
+  case invalidReaderToken
+  case jailbrokenDeviceError
+  case merchantBlocked
+  case networkNotConnected
+  case nfcDisabled
+  case noReaderSession
+  case operationTimedOut
+  case passcodeDisabled
+  case paymentCardDeclined
+  case paymentReadFailed
+  case paymentTypeChangeFailed
+  case pinCancelled
+  case pinEntryFailed
+  case pinEntryTimeout
+  case pinNotAllowed
+  case pinTokenInvalid
+  case readCancelled
+  case readerBackgroundRequestNotAllowed
+  case readerBusy
+  case readerErrorNotAllowed
+  case readerMemoryFull
+  case readerModelNotSupported
+  case readerNetworkAuthenticationError
+  case readerNetworkError
+  case readerNotReady
+  case readerOsVersionNotSupported
+  case readerPasscodeDisabled
+  case readerPrepareExpired
+  case readerPrepareFailed
+  case readerServiceConnectionError
+  case readerServiceError
+  case readerSessionAuthenticationError
+  case readerSessionBusy
+  case readerSessionExpired
+  case readerSessionNetworkError
+  case readerTokenExpired
+  case readerUnsupported
+  case readFromBackgroundError
+  case readNotAllowed
+  case readNotAllowedDuringCall
+  case readNotCompletedOrSessionEnded
+  case sdkNotInitializedError
+  case sessionPrepareError
+  case transactionError
+  case unsupportedDeviceError
+  case changingPaymentType
+  case readerCardDetected
+  case readerInitializationEnded
+  case readerInitializationStarted
+  case readerPinEntryCompleted
+  case readerPinEntryRequested
+  case readerReadCancelled
+  case readerReadCompleted
+  case readerReadNotCompleted
+  case readerReadRetry
+  case readerReadyForTap
+  case readerRemoveCard
+  case readerUnknown
+  case readerUpdating
+  case readerUserInterfaceDismissed
+  case sessionEnded
+  case sessionStarted
+  case sessionWillRestart
+  case readCardData
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum TapOnPhoneLogCategory : Swift.String {
+  case sdk
+  case ios
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TapOnPhoneSimulatedInitializeError : Swift.Equatable {
+  case unsupportedDeviceError
+  case deviceNotReadyError
+  case jailbrokenDeviceError
+  public func asEvent() -> TapOnPhoneSDK.TapOnPhoneEvent
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneSimulatedInitializeError, b: TapOnPhoneSDK.TapOnPhoneSimulatedInitializeError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct TapOnPhoneTransactionEvent : Swift.Equatable {
+  public let type: TapOnPhoneSDK.TapOnPhoneEventType
+  public var success: TapOnPhoneSDK.TapOnPhoneTransactionSuccess?
+  public var error: TapOnPhoneSDK.TapOnPhoneTransactionError?
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneTransactionEvent, b: TapOnPhoneSDK.TapOnPhoneTransactionEvent) -> Swift.Bool
+}
+public enum TapOnPhoneSimulatedReaderError : Swift.Equatable {
+  case readerErrorNotAllowed
+  case readerBackgroundRequestNotAllowed
+  case readerUnsupported
+  case readerOsVersionNotSupported
+  case readerModelNotSupported
+  case readerPasscodeDisabled
+  case readerNetworkError
+  case readerNetworkAuthenticationError
+  case readerServiceConnectionError
+  case readerNotReady
+  case emptyReaderToken
+  case invalidReaderToken
+  case readerPrepareFailed
+  case readerPrepareExpired
+  case readerTokenExpired
+  case deviceBanned
+  case readerMemoryFull
+  case readerBusy
+  case appleAccountNotLinked
+  case appleAccountAlreadyLinked
+  case appleAccountLinkingFailed
+  case appleAccountLinkRequiresiCloudSignIn
+  case appleAccountLinkingCancelled
+  case appleAccountLinkingCheckFailed
+  case merchantBlocked
+  case accountDeactivated
+  case invalidMerchant
+  public func asEvent() -> TapOnPhoneSDK.TapOnPhoneEvent
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError, b: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TapOnPhoneTransactionType : Swift.String {
+  case debit
+  case credit
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TapOnPhoneEventCategory {
+  case initialization
+  case deinitialization
+  case reader
+  case session
+  case appDelegate
+  case account
+  case transaction
+  case simulation
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneEventCategory, b: TapOnPhoneSDK.TapOnPhoneEventCategory) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct TapOnPhoneCardTypeMismatch : Swift.Codable {
+  public let expected: Swift.String
+  public let got: Swift.String
+  public var inPortuguese: TapOnPhoneSDK.TapOnPhoneCardTypeMismatch {
+    get
+  }
+  public var inSpanish: TapOnPhoneSDK.TapOnPhoneCardTypeMismatch {
+    get
+  }
+  public static func decode(from input: Swift.String) -> TapOnPhoneSDK.TapOnPhoneCardTypeMismatch?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum TapOnPhoneVisaCheckmarkText : Swift.Equatable {
+  case none
+  case approve
+  case success
+  case complete
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneVisaCheckmarkText, b: TapOnPhoneSDK.TapOnPhoneVisaCheckmarkText) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TapOnPhonePaymentCardType : Swift.String {
+  case credit
+  case debit
+  case combo
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct TapOnPhoneCardData {
+  public let network: TapOnPhoneSDK.TapOnPhonePaymentNetwork
+  public let cardType: TapOnPhoneSDK.TapOnPhonePaymentCardType
+}
+public enum TapOnPhoneLogLevel : Swift.Int {
+  case information
+  case warning
+  case error
+  case critical
+  case log
+  case debug
+  case trace
+  case metric
+  case none
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public class TapOnPhoneCredentials : Swift.Equatable {
+  public init(marketplace: Swift.String, seller: Swift.String, terminal: Swift.String, accessKey: Swift.String)
+  public static func == (lhs: TapOnPhoneSDK.TapOnPhoneCredentials, rhs: TapOnPhoneSDK.TapOnPhoneCredentials) -> Swift.Bool
+  @objc deinit
+}
+public struct TapOnPhoneEvent : Swift.Equatable {
+  public let category: TapOnPhoneSDK.TapOnPhoneEventCategory
+  public let type: TapOnPhoneSDK.TapOnPhoneEventType
+  public let code: TapOnPhoneSDK.TapOnPhoneEventCode
+  public let numberCode: Swift.Int
+  public let message: Swift.String
+  public let localizedDescription: Swift.String
+  public let logMessage: Swift.String
+  public var transaction: TapOnPhoneSDK.TapOnPhoneTransactionEvent?
+  public var readResultId: Swift.String?
+  public var readerIdentifier: Swift.String?
+  public let timestamp: Swift.Double
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneEvent, b: TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Bool
+}
+public enum TapOnPhoneSimulatedSessionError : Swift.Equatable {
+  case appleAccountNotLinked
+  case deviceNotReadyError
+  case networkNotConnected
+  case apiAuthenticationError
+  case unsupportedDeviceError
+  case operationTimedOut
+  case readerError(_: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError)
+  public func asEvent() -> TapOnPhoneSDK.TapOnPhoneEvent
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneSimulatedSessionError, b: TapOnPhoneSDK.TapOnPhoneSimulatedSessionError) -> Swift.Bool
+}
+public enum TapOnPhoneEventType {
+  case success
+  case error
+  case action
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneEventType, b: TapOnPhoneSDK.TapOnPhoneEventType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class TapOnPhone {
+  public static func Initialize(environment: TapOnPhoneSDK.TapOnPhoneEnvironment = .production, logLevel: TapOnPhoneSDK.TapOnPhoneLogLevel = .error, strictMode: Swift.Bool = true, credentials: TapOnPhoneSDK.TapOnPhoneCredentials, paymentType: TapOnPhoneSDK.TapOnPhoneTransactionType = .credit, simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedInitializeError? = nil, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func isDeviceCompatible() -> Swift.Bool
+  public static func isDeviceReady() -> Swift.Bool
+  public static func Deinitialize(onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func isAppleAccountLinked(refreshToken: Swift.Bool = false, simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError? = nil, onComplete: @escaping ((Swift.Bool) -> Swift.Void))
+  public static func relinkAppleAccount(refreshToken: Swift.Bool = false, simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedLinkAccountError? = nil, onComplete: @escaping ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void))
+  public static func startSession(refreshToken: Swift.Bool = false, paymentType: TapOnPhoneSDK.TapOnPhoneTransactionType = .credit, skipAccountLinkCheck: Swift.Bool = true, simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedSessionError? = nil, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func isSessionStarted() -> Swift.Bool
+  public static func linkAppleAccount(simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedLinkAccountError? = nil, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func readPaymentCard(amount: Foundation.Decimal, type: TapOnPhoneSDK.TapOnPhoneTransactionType, restartSessionIfTypeChanged: Swift.Bool = true, installments: Swift.Int = 1, currency: TapOnPhoneSDK.TapOnPhoneCurrencyCode = .BRL, clientMetadata: Swift.String? = nil, simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedReadCardError? = nil, simulateIsAppleAccountLinkedError: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError? = nil, simulateStartSessionError: TapOnPhoneSDK.TapOnPhoneSimulatedSessionError? = nil, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func cancelCardRead(simulateError: TapOnPhoneSDK.TapOnPhoneSimulatedCancelReadError? = nil, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func alwaysUseReaderEventsAsCallback(_ use: Swift.Bool)
+  public static func playVisaAnimation(settings: TapOnPhoneSDK.TapOnPhoneVisaBranding = TapOnPhoneVisaBranding(), builtInAnimation: Swift.Bool = false)
+  public static func getPaymentType() -> TapOnPhoneSDK.TapOnPhoneTransactionType
+  public static func getVersion() -> Swift.String
+  public static func getEnvironment() -> TapOnPhoneSDK.TapOnPhoneEnvironment?
+  public static func getLogLevel() -> TapOnPhoneSDK.TapOnPhoneLogLevel?
+  public static func getStrictMode() -> Swift.Bool?
+  public static func getSdkTimeout() -> Swift.Int
+  public static func setPaymentType(_ type: TapOnPhoneSDK.TapOnPhoneTransactionType, simulateIsAppleAccountLinkedError: TapOnPhoneSDK.TapOnPhoneSimulatedReaderError? = nil, simulateStartSessionError: TapOnPhoneSDK.TapOnPhoneSimulatedSessionError? = nil, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func setSimulateReaderUpdate(_ simulate: Swift.Bool)
+  public static func setUseMockedApiToken(_ mocked: Swift.Bool)
+  public static func setReaderEventsCallback(_ eventsCallback: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func setLogCallback(_ logCallback: ((TapOnPhoneSDK.TapOnPhoneLogMessage) -> Swift.Void)? = nil)
+  public static func setPerformanceEvaluation(_ enabled: Swift.Bool)
+  public static func setLogCardTlv(_ enabled: Swift.Bool)
+  public static func setApplicationBackToForegroundCallback(_ callback: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func setPrintLogs(_ printing: Swift.Bool)
+  public static func setEnvironment(environment: TapOnPhoneSDK.TapOnPhoneEnvironment)
+  public static func setLogLevel(logLevel: TapOnPhoneSDK.TapOnPhoneLogLevel)
+  public static func setStrictMode(strictMode: Swift.Bool, onComplete: ((TapOnPhoneSDK.TapOnPhoneEvent) -> Swift.Void)? = nil)
+  public static func setCredentials(credentials: TapOnPhoneSDK.TapOnPhoneCredentials)
+  public static func setSdkTimeout(seconds: Swift.Int, forceLow: Swift.Bool = false)
+  @objc deinit
+}
+public struct TapOnPhoneReadCardData : Swift.Codable {
+  public let network: Swift.String
+  public let cardType: Swift.String
+  public var inPortuguese: TapOnPhoneSDK.TapOnPhoneReadCardData {
+    get
+  }
+  public var inSpanish: TapOnPhoneSDK.TapOnPhoneReadCardData {
+    get
+  }
+  public static func decode(from input: Swift.String) -> TapOnPhoneSDK.TapOnPhoneReadCardData?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension TapOnPhoneSDK.TapOnPhoneVisaAnimationLangCode : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneVisaAnimationLangCode : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentNetwork : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentNetwork : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentNetwork : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneEnvironment : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneEnvironment : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneEnvironment : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneCurrencyCode : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneCurrencyCode : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneCurrencyCode : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneEventCode : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneEventCode : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneEventCode : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneLogCategory : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneLogCategory : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneLogCategory : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneSimulatedInitializeError : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneSimulatedReaderError : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneTransactionType : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneTransactionType : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneTransactionType : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneEventCategory : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneEventCategory : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneVisaCheckmarkText : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentCardType : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentCardType : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentCardType : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneLogLevel : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneLogLevel : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneLogLevel : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneEventType : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneEventType : Swift.Hashable {}
