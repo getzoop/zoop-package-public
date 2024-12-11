@@ -101,7 +101,7 @@ jobs:
           
           git checkout -b "$BRANCH_NAME" || git checkout "$BRANCH_NAME"
           
-          git add "${SDK_NAME}.podspec"
+          git add -all
           git commit -m "Update Podspec for release ${SDK_VERSION}"
           
           git push origin "$BRANCH_NAME"
