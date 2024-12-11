@@ -92,7 +92,7 @@ jobs:
       - name: Create Swift Package file
         run: |
           ROOT="./sdk-release/TapOnPhoneSDK-iOS"
-          PACKAGE_NAME="${{ github.event.release.name }}"
+          PACKAGE_NAME="TapOnPhone"
           PACKAGE_VERSION="${{ github.event.release.tag_name }}"
       
           PACKAGE_CONTENT="
