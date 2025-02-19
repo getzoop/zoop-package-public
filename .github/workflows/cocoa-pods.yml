@@ -12,7 +12,7 @@ jobs:
       SDK_NAME: TapOnPhone-iOS
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Ruby for Podspec generation
         uses: ruby/setup-ruby@v1
@@ -57,14 +57,14 @@ jobs:
         run: |
           unzip sdk-release.zip -d sdk-release/
           
-          if [[ ! -d sdk-release/TapOnPhoneSDK-iOS ]]; then
-            echo "Error: Expected xcframework files not found in the extracted folder."
+          if [[ ! -d sdk-release/TapOnPhoneSDK.xcframework ]]; then
+            echo "Error: Expected xcframework file not found in the extracted folder."
             exit 1
           fi
 
       - name: Create Podspec file
         run: |
-          XCFRAMEWORK_ROOT="./sdk-release/TapOnPhoneSDK-iOS"
+          XCFRAMEWORK_ROOT="./sdk-release"
           SDK_VERSION=$RELEASE_VERSION
           
           PODSPEC_CONTENT="
@@ -75,12 +75,11 @@ jobs:
             s.description      = 'Receive payments with iPhone using NFC'
             s.homepage         = 'https://github.com/getzoop/zoop-package-public'
             s.license          = { :type => 'MIT', :file => 'LICENSE' }
-            s.author           = { 'Talisson Bento' => 'talisson.bento@ifood.com.br' }
+            s.author           = { 'Wellington Nascente Hirsch' => 'wellington.hirsch@ifood.com.br' }
             s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => '${{ github.event.release.tag_name }}' }
             s.source_files     = '${XCFRAMEWORK_ROOT}/**/*.h'
             s.public_header_files = '${XCFRAMEWORK_ROOT}/**/*.h'
             s.vendored_frameworks = '${XCFRAMEWORK_ROOT}/TapOnPhoneSDK.xcframework'
-            s.vendored_frameworks = '${XCFRAMEWORK_ROOT}/VisaSensoryBranding.xcframework'
             s.requires_arc     = true
             s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
             s.frameworks        = 'UIKit'
@@ -91,7 +90,7 @@ jobs:
 
       - name: Create Swift Package file
         run: |
-          ROOT="./sdk-release/TapOnPhoneSDK-iOS"
+          ROOT="./sdk-release"
           PACKAGE_NAME="${{ github.event.release.name }}"
           PACKAGE_VERSION="${{ github.event.release.tag_name }}"
       
@@ -102,22 +101,17 @@ jobs:
           let package = Package(
               name: \"${PACKAGE_NAME}\",
               platforms: [
-                  .iOS(.v11),
-                  .macOS(.v10_15)
+                  .iOS(.v16_4)
               ],
               products: [
                   .library(
                       name: \"${PACKAGE_NAME}\",
-                      targets: [\"TapOnPhoneSDK\", \"VisaSensoryBranding\"])
+                      targets: [\"TapOnPhoneSDK\"])
               ],
               targets: [
                   .binaryTarget(
                       name: \"TapOnPhoneSDK\",
                       path: \"${ROOT}/TapOnPhoneSDK.xcframework\"
-                  ),
-                  .binaryTarget(
-                      name: \"VisaSensoryBranding\",
-                      path: \"${ROOT}/VisaSensoryBranding.xcframework\"
                   )
               ]
           )
