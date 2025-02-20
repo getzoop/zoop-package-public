@@ -14,6 +14,16 @@ Repositório publico Zoop para clientes terem acesso a produtos com facilidade
                 </ol>
             </li>
             <li>
+                <a href="#swift-package-manager">Swift Package Manager</a>
+                <ol type="i">
+                    <li><a href="#pré-requisitos">Pré-requisitos</a></li>
+                    <li><a href="#passo-a-passo">Passo a passo</a></li>
+                </ol>
+            </li>
+            <li>
+                <a href="#cocoapods">CocoaPods</a>
+            </li>
+            <li>
                 <a href="#gerando-uma-github-pat">Gerando uma GitHub PAT</a>
                 <ol type="i">
                     <li><a href="#cuidados-sobre-a-exposição-da-pat">Cuidados sobre a exposição da PAT</a></li>
@@ -69,6 +79,84 @@ repositories {
         }
     }
 }
+```
+
+## Swift Package Manager
+
+### Pré-requisitos
+
+- **Xcode** instalado (versão compatível com Swift Package Manager).
+- Acesso ao repositório do pacote no **GitHub**.
+- Um **Personal Access Token (PAT)** do GitHub (se necessário para repositórios privados).
+
+### Passo a passo
+
+1. Abrir o Projeto no Xcode: Abra o projeto no qual deseja adicionar o pacote utilizando o **Xcode**.
+2. Acessar as Dependências do Projeto:
+    1. No **navegador de projeto**, clique no nome do seu projeto.
+    2. Selecione a aba **Package Dependencies**.
+3. Configurar Conta GitHub no Xcode (Se Necessário):
+    1. Clique no botão **+** para adicionar uma conta.
+    2. Escolha **GitHub** e insira suas credenciais.
+    3. Caso seja necessário um **PAT**, gere um no GitHub e insira no Xcode.
+4. Adicionar o Repositório do Pacote:
+    1. Copie a URL do repositório do pacote.
+    2. No Xcode, clique em **+** para adicionar um pacote.
+    3. Cole a URL copiada no campo de pesquisa e clique em **Adicionar Pacote**.
+5. Definir a Regra de Dependência:
+    1. Escolha uma versão estável ou uma branch específica.
+    2. Ajuste a opção **Dependency Rule** conforme necessário (`Up to Next Major Version` ou uma branch específica).
+6. Confirmar a Adição do Pacote: Após a configuração, o pacote será baixado e adicionado ao projeto. Confirme que ele aparece na lista de dependências.
+7. Validar a Integração: 
+    1. Verifique se o pacote está listado em **Package Dependencies**.
+    2. Teste a importação no código:
+```swift
+import NomeDoPacote
+
+// Exemplo básico de uso
+NomeDoPacote.algo()
+```
+
+## CocoaPods
+
+
+1. Configurar o arquivo `Podfile`
+    1. No diretório raiz do seu projeto, abra (ou crie) um arquivo chamado `Podfile`.
+    2. Adicione a seguinte configuração para incluir o pacote via CocoaPods, especificando o repositório Git e a branch escolhida:
+```ruby
+platform :ios, '11.0'
+
+target 'SeuProjeto' do
+  use_frameworks!
+
+  # Adicionando o TapOnPhoneSDK via CocoaPods
+  pod 'NomeDoPacote', :git => 'https://github.com/getzoop/zoop-package-public.git', :branch => 'NomeDoPacote/Versão'
+end
+``` 
+
+> **Nota:** Substitua `'SeuProjeto'` pelo nome do seu *target* no Xcode, `'NomeDoPacote'` pelo nome do Pacote desejado e `'Versão'` pela versão desse pacote.
+
+2. Instalar as dependências
+    1. No terminal, navegue até o diretório do seu projeto.
+    2. Execute o comando e aguarde a instalação das dependências. O CocoaPods irá clonar o repositório especificado e integrar o SDK ao seu projeto.
+```bash
+pod install
+```
+> **Dica:** Caso encontre erros, certifique-se de que o CocoaPods está atualizado executando:  
+> ```bash
+> sudo gem install cocoapods
+> ``` 
+
+3. Abrir o projeto com o arquivo `.xcworkspace`: Depois que a instalação for concluída, abra o arquivo `.xcworkspace` gerado pelo CocoaPods para trabalhar com o SDK:
+```bash
+open SeuProjeto.xcworkspace
+``` 
+4. Validar a integração
+```swift
+import NomeDoPacote
+
+// Exemplo básico de uso
+NomeDoPacote.algo()
 ```
 
 ## Gerando uma GitHub PAT
