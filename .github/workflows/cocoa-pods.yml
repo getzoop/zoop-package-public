@@ -46,25 +46,25 @@ jobs:
           RELEASE_URL="https://github.com/getzoop/zoop-package-public/releases/download/${{ github.event.release.tag_name }}/TapOnPhoneSDK-iOS.zip"
           echo "Downloading .zip from: $RELEASE_URL"
           
-          curl -L -o sdk-release.zip $RELEASE_URL
+          curl -L -o sources.zip $RELEASE_URL
           
-          if [[ ! -f sdk-release.zip ]]; then
+          if [[ ! -f sources.zip ]]; then
             echo "Error: .zip file not downloaded successfully."
             exit 1
           fi
 
       - name: Unzip the .zip file
         run: |
-          unzip sdk-release.zip -d sdk-release/
+          unzip sources.zip -d sources/
           
-          if [[ ! -d sdk-release/TapOnPhoneSDK.xcframework ]]; then
+          if [[ ! -d sources/TapOnPhoneSDK.xcframework ]]; then
             echo "Error: Expected xcframework file not found in the extracted folder."
             exit 1
           fi
 
       - name: Create Podspec file
         run: |
-          XCFRAMEWORK_ROOT="./sdk-release"
+          XCFRAMEWORK_ROOT="./sources"
           SDK_VERSION=$RELEASE_VERSION
           
           PODSPEC_CONTENT="
@@ -90,7 +90,7 @@ jobs:
 
       - name: Create Swift Package file
         run: |
-          ROOT="./sdk-release"
+          ROOT="./sources"
           PACKAGE_NAME="${{ github.event.release.name }}"
           PACKAGE_VERSION="${{ github.event.release.tag_name }}"
       
@@ -101,7 +101,7 @@ jobs:
           let package = Package(
               name: \"${PACKAGE_NAME}\",
               platforms: [
-                  .iOS(.v16_4)
+                  .iOS(.v11)
               ],
               products: [
                   .library(
