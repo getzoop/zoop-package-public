@@ -1,0 +1,208 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios16.4 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name TapOnPhoneSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import AVKit
+import CoreHaptics
+import Foundation
+import Network
+import ProximityReader
+import Swift
+@_exported import TapOnPhoneSDK
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum TapOnPhoneEnvironment : Swift.String {
+  case production
+  case staging
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct TapOnPhoneTransactionSuccess : Swift.Equatable, Swift.Hashable {
+  public let transactionId: Swift.String
+  public let cardBrand: Swift.String
+  public let readerIdentifier: Swift.String?
+  public let readResultId: Swift.String
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneTransactionSuccess, b: TapOnPhoneSDK.TapOnPhoneTransactionSuccess) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct TapOnPhoneTransactionError : Swift.Equatable, Swift.Hashable, Swift.Error {
+  public let error: TapOnPhoneSDK.TapOnPhoneError
+  public let transactionId: Swift.String?
+  public let cardBrand: Swift.String?
+  public let readResultId: Swift.String?
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneTransactionError, b: TapOnPhoneSDK.TapOnPhoneTransactionError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TapOnPhoneErrorCode : Swift.Int {
+  case unsupportedDeviceError
+  case deviceNotReadyError
+  case apiAuthenticationError
+  case appleAccountNotLinked
+  case appleAccountLinkError
+  case transactionError
+  case jailbrokenDeviceError
+  case appleAccountAlreadyLinked
+  case appleAccountLinkingFailed
+  case appleAccountLinkingCancelled
+  case appleAccountLinkingCheckFailed
+  case appleAccountLinkRequiresiCloudSignIn
+  case readerErrorNotAllowed
+  case readerBackgroundRequestNotAllowed
+  case readerUnsupported
+  case readerOsVersionNotSupported
+  case readerModelNotSupported
+  case readerPasscodeDisabled
+  case readerNetworkError
+  case readerNetworkAuthenticationError
+  case readerServiceConnectionError
+  case emptyReaderToken
+  case invalidReaderToken
+  case readerPrepareFailed
+  case readerPrepareExpired
+  case readerTokenExpired
+  case deviceBanned
+  case readerMemoryFull
+  case readerBusy
+  case merchantBlocked
+  case accountDeactivated
+  case invalidMerchant
+  case networkNotConnected
+  case invalidAmountOrInstallments
+  case readNotCompletedOrSessionEnded
+  case readNotAllowed
+  case readFromBackgroundError
+  case noReaderSession
+  case readerSessionExpired
+  case readerSessionNetworkError
+  case readerSessionAuthenticationError
+  case readerSessionBusy
+  case readCancelled
+  case invalidAmount
+  case invalidCurrencyCode
+  case invalidPreferredAID
+  case nfcDisabled
+  case readNotAllowedDuringCall
+  case passcodeDisabled
+  case cardReadFailed
+  case paymentReadFailed
+  case paymentCardDeclined
+  case pinEntryFailed
+  case pinTokenInvalid
+  case pinEntryTimeout
+  case pinCancelled
+  case pinNotAllowed
+  case apiNetworkError
+  case readerNotReady
+  case readerUnknown
+  case readerServiceError
+  case invalidPaymentType
+  case apiRequestTimedOut
+  case invalidPaymentToken
+  case visaAnimationFailed
+  case cardReadExtractionFailed
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum TapOnPhoneErrorSource : Swift.String {
+  case api
+  case apple
+  case sdk
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TapOnPhonePaymentType : Swift.String {
+  case credit
+  case debit
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TapOnPhoneLogLevel : Swift.Int {
+  case information
+  case warning
+  case error
+  case critical
+  case log
+  case debug
+  case trace
+  case metric
+  case none
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public class TapOnPhoneCredentials {
+  public init(marketplace: Swift.String, seller: Swift.String, accessKey: Swift.String)
+  @objc deinit
+}
+public struct TapOnPhoneError : Swift.Equatable, Swift.Error, Swift.Hashable {
+  public let code: TapOnPhoneSDK.TapOnPhoneErrorCode
+  public let source: TapOnPhoneSDK.TapOnPhoneErrorSource
+  public let message: Swift.String
+  public let description: Swift.String?
+  public let readerIdentifier: Swift.String?
+  public let timestamp: Swift.Double
+  public static func == (a: TapOnPhoneSDK.TapOnPhoneError, b: TapOnPhoneSDK.TapOnPhoneError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct TapOnPhonePaymentRequest : Swift.Equatable {
+  public let amount: Foundation.Decimal
+  public let paymentType: TapOnPhoneSDK.TapOnPhonePaymentType
+  public let installments: Swift.Int
+  public let metadata: Swift.String?
+  public init(amount: Foundation.Decimal, paymentType: TapOnPhoneSDK.TapOnPhonePaymentType, installments: Swift.Int = 1, metadata: Swift.String? = nil)
+  public static func == (a: TapOnPhoneSDK.TapOnPhonePaymentRequest, b: TapOnPhoneSDK.TapOnPhonePaymentRequest) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class TapOnPhone {
+  public static func initialize(environment: TapOnPhoneSDK.TapOnPhoneEnvironment = .production, credentials: TapOnPhoneSDK.TapOnPhoneCredentials, logLevel: TapOnPhoneSDK.TapOnPhoneLogLevel = .error, onSuccess: @escaping () -> Swift.Void, onError: @escaping (TapOnPhoneSDK.TapOnPhoneError) -> Swift.Void)
+  public static func terminate()
+  public static func pay(payRequest: TapOnPhoneSDK.TapOnPhonePaymentRequest, onApproved: @escaping (TapOnPhoneSDK.TapOnPhoneTransactionSuccess) -> Swift.Void, onError: @escaping (TapOnPhoneSDK.TapOnPhoneTransactionError) -> Swift.Void)
+  public static func getVersion() -> Swift.String
+  @objc deinit
+}
+extension TapOnPhoneSDK.TapOnPhoneEnvironment : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneEnvironment : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneEnvironment : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneErrorCode : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneErrorCode : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneErrorCode : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneErrorSource : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneErrorSource : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneErrorSource : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentType : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentType : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhonePaymentType : Swift.RawRepresentable {}
+extension TapOnPhoneSDK.TapOnPhoneLogLevel : Swift.Equatable {}
+extension TapOnPhoneSDK.TapOnPhoneLogLevel : Swift.Hashable {}
+extension TapOnPhoneSDK.TapOnPhoneLogLevel : Swift.RawRepresentable {}
