@@ -23,20 +23,19 @@ jobs:
         id: get_release_info
         run: |
           RELEASE_NAME="${{ github.event.release.name }}"
-          RELEASE_VERSION="${{ github.event.release.tag_name }}"
+          RELEASE_TAG="${{ github.event.release.tag_name }}"
           echo "Release Name: $RELEASE_NAME"
-          echo "Release Version: $RELEASE_VERSION"
+          echo "Release Tag: $RELEASE_TAG"
 
-          if [[ "$RELEASE_NAME" =~ ^(TapOnPhoneSDK-iOS)\ \-\ [0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Release matches the pattern."
+          if [[ "$RELEASE_NAME" =~ ^(TapOnPhoneSDK-iOS)\ \-\ ([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
             echo "MATCHED=true" >> $GITHUB_ENV
             BASE_NAME="${BASH_REMATCH[1]}"
+            CLEAN_VERSION="${BASH_REMATCH[2]}"
             echo "BASE_NAME=$BASE_NAME" >> $GITHUB_ENV
+            echo "CLEAN_VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
           else
-            echo "Release does not match the pattern."
             echo "MATCHED=false" >> $GITHUB_ENV
           fi
-    
 
       - name: Exit if release name doesn't match the pattern
         if: env.MATCHED == 'false'
@@ -76,12 +75,10 @@ jobs:
       - name: Create Podspec file
         run: |
           XCFRAMEWORK_ROOT="./sources"
-          SDK_VERSION=$RELEASE_VERSION
-          
           PODSPEC_CONTENT="
           Pod::Spec.new do |s|
             s.name             = '${SDK_NAME}'
-            s.version          = '${{ github.event.release.tag_name }}'
+            s.version          = '${{ env.CLEAN_VERSION }}'
             s.summary          = 'Tap on phone SDK for iOS'
             s.description      = 'Receive payments with iPhone using NFC'
             s.homepage         = 'https://github.com/getzoop/zoop-package-public'
@@ -103,9 +100,7 @@ jobs:
         run: |
           ROOT="./sources"
           PACKAGE_NAME="$BASE_NAME"
-          PACKAGE_VERSION="${{ github.event.release.tag_name }}"
-          
-          echo "Using PACKAGE_NAME=$PACKAGE_NAME"
+          PACKAGE_VERSION="${{ env.CLEAN_VERSION }}"
 
           PACKAGE_CONTENT="
           // swift-tools-version: 5.6
@@ -130,8 +125,7 @@ jobs:
           )
           "
           echo "$PACKAGE_CONTENT" > Package.swift
-          echo "Package.swift criado com sucesso:"
-
+          echo "Package.swift criado com sucesso"
 
       - name: Commit and push Podspec file to specific branch
         env:
@@ -141,11 +135,8 @@ jobs:
           git config --global user.email "github-actions@github.com"
           
           BRANCH_NAME="release-${{ github.event.release.tag_name }}"
-          echo "Branch: $BRANCH_NAME"
-          
           git checkout -b "$BRANCH_NAME" || git checkout "$BRANCH_NAME"
           
           git add --all
-          git commit -m "Update Podspec for release ${SDK_VERSION}"
-          
+          git commit -m "Update Podspec for release ${{ env.CLEAN_VERSION }}"
           git push origin "$BRANCH_NAME"
