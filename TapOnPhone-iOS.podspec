@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary          = 'Tap on phone SDK for iOS'
   s.description      = 'Receive payments with iPhone using NFC'
   s.homepage         = 'https://github.com/getzoop/zoop-package-public'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.license          = { :type => 'MIT' }
   s.author           = { 'Leandro Villela' => '52663251+leandro-villela@users.noreply.github.com' }
   s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => 'zoop-sdk-taponphone-ios-1.1.1' }
   s.source_files     = './sources/**/*.h'
