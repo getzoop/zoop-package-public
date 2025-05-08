@@ -74,7 +74,7 @@ jobs:
 
       - name: Create Podspec file
         run: |
-          XCFRAMEWORK_ROOT="./sources"
+          XCFRAMEWORK_ROOT="sources"
           PODSPEC_CONTENT="
           Pod::Spec.new do |s|
             s.name             = '${SDK_NAME}'
@@ -82,7 +82,7 @@ jobs:
             s.summary          = 'Tap on phone SDK for iOS'
             s.description      = 'Receive payments with iPhone using NFC'
             s.homepage         = 'https://github.com/getzoop/zoop-package-public'
-            s.license          = { :type => 'MIT', :file => 'LICENSE' }
+            s.license          = { :type => 'MIT' }
             s.author           = { '${{ steps.author_info.outputs.author_name }}' => '${{ steps.author_info.outputs.author_email }}' }
             s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => '${{ github.event.release.tag_name }}' }
             s.source_files     = '${XCFRAMEWORK_ROOT}/**/*.h'
