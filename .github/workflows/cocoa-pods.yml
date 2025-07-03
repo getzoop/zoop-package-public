@@ -110,7 +110,7 @@ jobs:
           let package = Package(
               name: \"${PACKAGE_NAME}\",
               platforms: [
-                  .iOS(.16_4)
+                  .iOS(.v16_4)
               ],
               products: [
                   .library(
