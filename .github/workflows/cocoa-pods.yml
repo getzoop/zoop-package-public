@@ -82,7 +82,7 @@ jobs:
             s.summary          = 'Tap on phone SDK for iOS'
             s.description      = 'Receive payments with iPhone using NFC'
             s.homepage         = 'https://github.com/getzoop/zoop-package-public'
-            s.license          = { :type => 'MIT' }
+            s.license = { :type => 'Proprietary', :text => 'Copyright (c) 2025 Zoop. All rights reserved.' }
             s.author           = { '${{ steps.author_info.outputs.author_name }}' => '${{ steps.author_info.outputs.author_email }}' }
             s.source           = { :git => 'https://github.com/getzoop/zoop-package-public.git', :tag => '${{ github.event.release.tag_name }}' }
             s.source_files     = '${XCFRAMEWORK_ROOT}/**/*.h'
@@ -91,6 +91,7 @@ jobs:
             s.requires_arc     = true
             s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
             s.frameworks        = 'UIKit'
+            s.ios.deployment_target = '16.4'
           end
           "
           echo "$PODSPEC_CONTENT" > "${SDK_NAME}.podspec"
@@ -109,7 +110,7 @@ jobs:
           let package = Package(
               name: \"${PACKAGE_NAME}\",
               platforms: [
-                  .iOS(.v11)
+                  .iOS(.16_4)
               ],
               products: [
                   .library(
