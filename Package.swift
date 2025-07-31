@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "TapOnPhoneSDK-iOS",
     platforms: [
-        .iOS(.v16_4)
+        .iOS(.v16)
     ],
     products: [
         .library(
