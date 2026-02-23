@@ -124,7 +124,7 @@ NomeDoPacote.algo()
     1. No diretório raiz do seu projeto, abra (ou crie) um arquivo chamado `Podfile`.
     2. Adicione a seguinte configuração para incluir o pacote via CocoaPods, especificando o repositório Git e a branch escolhida:
 ```ruby
-platform :ios, '11.0'
+platform :ios, '14.0'
 
 target 'SeuProjeto' do
   use_frameworks!
