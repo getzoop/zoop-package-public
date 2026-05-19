@@ -1,0 +1,11 @@
+framework module TapOnPhoneSDK {
+  umbrella header "TapOnPhoneSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module TapOnPhoneSDK.Swift {
+  header "TapOnPhoneSDK-Swift.h"
+  requires objc
+}
